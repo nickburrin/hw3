@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-/** Import ImplicitMonitor Library **/
-import autosynch.*;
-
 
 /**
  * A linked list based priority queue. Each node in the linked list 
@@ -13,11 +10,7 @@ import autosynch.*;
  * @author Nick Burrin
  *
  */
-public class PQueue {        
-	/** Create Monitor Object. **/
-	private final AbstractImplicitMonitor monitor_1892124631 = 
-			new NaiveImplicitMonitor();
-
+public monitor class PQueue {
 	ArrayList<Node> list;
 	private int MAX;
 	/**
@@ -28,7 +21,7 @@ public class PQueue {
 		list = new ArrayList<Node>();
 		this.MAX = m;
 	}
-
+	
 	/**
 	 * Inserts the name with its priority in the PQueue
 	 * Returns -1 if name exists in the list
@@ -39,55 +32,27 @@ public class PQueue {
 	 * @return
 	 */
 	public int insert(String name, int pri){
-		/* monitor */
-		monitor_1892124631.enter();
-
 		Node newNode = new Node(name, pri);
 		if(list.contains(newNode)){
-			int ret_944706736 =  -1;
-
-			/* leave monitor */
-			monitor_1892124631.leave();
-			return ret_944706736;
-
+			return -1;
 		}
-		if (!(list.size() < MAX)) {
-			/* Create Condition Variable*/
-			AbstractCondition condition_1339509681 = monitor_1892124631.makeCondition(
-					new Assertion() {
-						public boolean isTrue() {
-							return (list.size() < MAX);
-						}
-					}
-					);
-			condition_1339509681.await();
-		}
-
+		
+		waituntil(list.size() < MAX);
 
 		for(int i = 0; i < list.size(); i++){
 			if(pri > list.get(i).priority){	
 				//Scan the list until you find the first element with a lower priority
 				list.add(i, newNode);
-				int ret_204808045 =  i;
-
-				/* leave monitor */
-				monitor_1892124631.leave();
-				return ret_204808045;
-
+				return i;
 			}
 		}
 
 		//If you've made it here, then this element has the lowest priority
 		//Insert it as the last element (or the first element is list is empty)
 		list.add(newNode);
-		int ret_1940009821 =  list.size() - 1;
-
-		/* leave monitor */
-		monitor_1892124631.leave();
-		return ret_1940009821;
-
+		return list.size() - 1;
 	}
-
+	
 	/**
 	 * Returns the position of the name in the list
 	 * Returns -1 if the name is not found
@@ -95,18 +60,11 @@ public class PQueue {
 	 * @return
 	 */
 	public int search(String name){
-		/* monitor */
-		monitor_1892124631.enter();
-
 		int index = list.indexOf(new Node(name, -1));
-		int ret_1783184229 =  index;
-
-		/* leave monitor */
-		monitor_1892124631.leave();
-		return ret_1783184229;
-
+		
+		return index;
 	}
-
+	
 	/**
 	 * Returns the name with the highest priority in the list
 	 * If the list is empty, the method blocks
@@ -114,27 +72,8 @@ public class PQueue {
 	 * @return
 	 */
 	public String getFirst(){
-		/* monitor */
-		monitor_1892124631.enter();
-
-		if (!(list.size() > 0)) {
-			/* Create Condition Variable*/
-			AbstractCondition condition_718198498 = monitor_1892124631.makeCondition(
-					new Assertion() {
-						public boolean isTrue() {
-							return (list.size() > 0);
-						}
-					}
-					);
-			condition_718198498.await();
-		}
-
-		String ret_1904059746 =  list.remove(0).name;
-
-		/* leave monitor */
-		monitor_1892124631.leave();
-		return ret_1904059746;
-
+		waituntil(list.size() > 0);
+		return list.remove(0).name;
 	}
 }
 
@@ -150,7 +89,7 @@ class Node{
 		this.name = n;
 		this.priority = p;
 	}
-
+	
 	public boolean equals(Object other){
 		if(other instanceof Node){
 			return this.name.equals(((Node)other).name);
@@ -159,7 +98,7 @@ class Node{
 			return false;
 		}
 	}
-
+	
 	public int hashCode(){
 		return this.name.length() * this.priority;
 	}

@@ -1,0 +1,95 @@
+Added "four" at index 0 with priority 4
+Added "seven" at index 2 with priority 1
+Added "two" at index 0 with priority 9
+Added "three" at index 1 with priority 0
+Found "four" at index 1
+Found "two" at index 0
+Found "seven" at index 2
+Found "three" at index 3
+Added "six" at index 0 with priority 8
+Added "five" at index 1 with priority 4
+Found "six" at index 0
+Added "one" at index 2 with priority 0
+Found "five" at index 1
+Found "one" at index 2
+Removing the first element "two" with priority 1
+Removing the first element "seven" with priority 9
+Removing the first element "four" with priority 0
+Removing the first element "three" with priority 4
+Added "seven" at index 1 with priority 8
+Found "seven" at index 1
+Removing the first element "six" with priority 0
+Added "three" at index 1 with priority 3
+Added "four" at index 0 with priority 8
+Found "four" at index 0
+Removing the first element "five" with priority 8
+Removing the first element "seven" with priority 4
+Added "two" at index 2 with priority 1
+Found "three" at index 1
+Added "one" at index -1 with priority 7
+Found "two" at index 2
+Found "one" at index 3
+Removing the first element "four" with priority 8
+Added "five" at index 1 with priority 2
+Found "five" at index 1
+Removing the first element "three" with priority 8
+Added "seven" at index 0 with priority 8
+Removing the first element "seven" with priority 3
+Added "four" at index 0 with priority 4
+Found "seven" at index -1
+Found "four" at index 0
+Removing the first element "five" with priority 1
+Removing the first element "four" with priority 7
+Added "one" at index -1 with priority 1
+Found "one" at index 3
+Added "two" at index -1 with priority 9
+Found "two" at index 2
+Added "six" at index 0 with priority 7
+Found "six" at index 0
+Added "three" at index 1 with priority 2
+Found "three" at index 1
+Removing the first element "six" with priority 2
+Added "five" at index 0 with priority 8
+Found "five" at index 0
+Removing the first element "five" with priority 8
+Added "seven" at index 0 with priority 4
+Found "seven" at index 0
+Removing the first element "seven" with priority 4
+Added "four" at index 1 with priority 2
+Found "four" at index 1
+Removing the first element "three" with priority 1
+Removing the first element "four" with priority 9
+Removing the first element "one" with priority 7
+Removing the first element "two" with priority 2
+Added "one" at index -1 with priority 9
+Found "one" at index -1
+Added "three" at index 0 with priority 5
+Found "three" at index 0
+Added "six" at index 1 with priority 1
+Found "six" at index 2
+Added "two" at index 0 with priority 4
+Found "two" at index 1
+Removing the first element "three" with priority 8
+Added "five" at index 0 with priority 5
+Found "five" at index 0
+Removing the first element "five" with priority 4
+Removing the first element "two" with priority 2
+Added "seven" at index 0 with priority 7
+Found "seven" at index 0
+Added "four" at index 1 with priority 7
+Found "four" at index 1
+Removing the first element "seven" with priority 9
+Added "one" at index 0 with priority 8
+Found "one" at index 0
+Removing the first element "four" with priority 4
+Removing the first element "one" with priority 5
+Added "two" at index 0 with priority 0
+Found "two" at index 1
+Removing the first element "six" with priority 1
+Added "three" at index 0 with priority 9
+Found "three" at index 0
+Added "six" at index 2 with priority 0
+Found "six" at index 2
+Removing the first element "three" with priority 5
+Added "five" at index 0 with priority 5
+Found "five" at index 0
