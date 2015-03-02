@@ -67,7 +67,7 @@ class TestThread implements Runnable{
 			
 			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 
-			System.out.printf("Removing the first element \"%s\" with priority %d\n", priQueue.getFirst(), p);
+			System.out.printf("Removing the first element \"%s\"\n", priQueue.getFirst());
 			//System.out.println("Found " + this.name + " at index " + priQueue.search(this.name));
 		}
 	}

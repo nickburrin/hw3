@@ -4,21 +4,21 @@ public class Library {
 
 	public Library(int numBooks) {
 		this.numBooks = numBooks;
-		checkedOut = new int[numBooks+1];
+		checkedOut = new int[numBooks];
 	}
 
 	public synchronized int reserveBook(int ci, int bookNum) { 
-		if (bookNum >= numBooks || bookNum < 0 || checkedOut[bookNum] != 0) {
+		if (bookNum > numBooks || bookNum < 0 || checkedOut[bookNum-1] != 0) {
 			return -1;
 		}
 		
-		checkedOut[bookNum] = ci;
+		checkedOut[bookNum-1] = ci;
 		return 1;
 	}
 
 	public synchronized int returnBook(int ci, int bookNum) {
-		if((bookNum < numBooks && bookNum >= 0) && (checkedOut[bookNum] == ci)) {
-			checkedOut[bookNum] = 0;
+		if((bookNum <= numBooks && bookNum > 0) && (checkedOut[bookNum-1] == ci)) {
+			checkedOut[bookNum-1] = 0;
 			return 2;
 		}
 		

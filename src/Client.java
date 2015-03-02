@@ -13,7 +13,7 @@ import java.util.StringTokenizer;
 
 public class Client {
 	static PrintStream pout;
-    static Socket server;
+	static Socket server;
 	static DatagramPacket sPacket, rPacket;
 	static Scanner din;
 	static String ipa;
@@ -24,16 +24,16 @@ public class Client {
 	static int commandType;
 	static final int UDP = 1;
 	static final int TCP = 0;
-	
+
 	public static void getSocket(int port) throws IOException {
-        server = new Socket(ipa, port);
-        din = new Scanner(server.getInputStream());
-        pout = new PrintStream(server.getOutputStream());
-    }
-	
+		server = new Socket(ipa, port);
+		din = new Scanner(server.getInputStream());
+		pout = new PrintStream(server.getOutputStream());
+	}
+
 	private static boolean legalMessage(String msg) {
 		StringTokenizer st = new StringTokenizer(msg);
-		
+
 		if(st.countTokens() < 2){
 			System.out.println("Did not enter a valid number of input tokens");
 			return false;
@@ -49,7 +49,7 @@ public class Client {
 				} catch (NumberFormatException | InterruptedException e) {
 					e.printStackTrace();
 				} 
-				
+
 				return false;
 			} else if(st.countTokens() == 3){
 				//5 total tokens for these lines but countTokens() accounts for remaining tokens, and we have already called nextToken twice
@@ -66,7 +66,7 @@ public class Client {
 						if(protocol.equalsIgnoreCase("U") || protocol.equalsIgnoreCase("T")){//checking for appropriate protocol
 							if(protocol.equalsIgnoreCase("U")){ commandType = UDP; }
 							else{ commandType = TCP; }
-							
+
 							String parsed = first + " " + book + " " + command;
 							msg = parsed;
 							return true;
@@ -81,30 +81,28 @@ public class Client {
 				return false;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	public static void main(String args[]) throws Exception {
-		readInputFile(args[0]);
 
+	public static void main(String args[]) throws Exception {
+		Scanner scan = new Scanner(System.in);
 		DatagramSocket datasocket = null;
-		
+		init(scan.nextLine());
+
 		try {
 			datasocket = new DatagramSocket();
-		//	datasocket.setSoTimeout(500);
-
-			for (String msg : commands) {
-				
+			String msg = "";
+			while ((msg = scan.nextLine()) != null) {
 				try {
-					// send command
+					msg = readInput(msg);
 					if(legalMessage(msg)){
 						if(commandType == UDP){
 							byte[] buffer = new byte[msg.length()];
 							buffer = msg.getBytes();
 							sPacket = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ipa), port);
 							datasocket.send(sPacket);//send as a data packet
-	
+
 							// receive command
 							byte[] rbuffer = new byte[len];
 							rPacket = new DatagramPacket(rbuffer, rbuffer.length);
@@ -113,11 +111,11 @@ public class Client {
 						}
 						else{
 							getSocket(port);
-			    			pout.println(msg);
-			    			pout.flush();
-			    			String retValue = din.nextLine();
-			    			System.out.println(retValue);
-			    			server.close();
+							pout.println(msg);
+							pout.flush();
+							String retValue = din.nextLine();
+							System.out.println(retValue);
+							server.close();
 						}
 					}
 				}  catch (IOException e) {
@@ -130,25 +128,20 @@ public class Client {
 			datasocket.close();
 		}
 	}
-	
-	private static void readInputFile(String file) throws IOException {
-		BufferedReader dIn = null;
-		try {
-			dIn = new BufferedReader(new FileReader(file));
-			StringTokenizer st = new StringTokenizer(dIn.readLine());
-			clientID = Integer.parseInt(st.nextToken());
-			ipa = st.nextToken();
-			String line = dIn.readLine();
-			while (line != null) {
-				if(!line.contains("sleep")){
-					line = "c" + clientID + " " + line;
-				}
-				commands.add(line);
-				line = dIn.readLine();
+
+	static void init(String nextLine) {
+		StringTokenizer st = new StringTokenizer(nextLine);
+		clientID = Integer.parseInt(st.nextToken());
+		ipa = st.nextToken();
+	}
+
+	static String readInput(String msg) throws IOException {
+		if(msg != null) {
+			if(!msg.contains("sleep")){
+				msg = "c" + clientID + " " + msg;
 			}
-		} catch (FileNotFoundException e) {} catch (IOException e) {System.err.println(e);} 
-		finally {
-			dIn.close();
 		}
+		
+		return msg;
 	}
 }

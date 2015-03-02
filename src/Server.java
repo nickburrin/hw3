@@ -1,8 +1,9 @@
 import java.net.*;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.io.*;
 
-public class LibraryServer {
+public class Server {
 	static int numBooks = 0;
 	static String ipAddr;
 	static int portUDP;
@@ -10,7 +11,7 @@ public class LibraryServer {
 	static int len = 1024;
 	Library lib;
 
-	LibraryServer(int numBooks) {
+	Server(int numBooks) {
 		lib = new Library(numBooks);
 	}
 
@@ -19,13 +20,10 @@ public class LibraryServer {
 		DatagramSocket UDPSocket = null;
 		Socket s;
 		try {
-			/*Initialize the server from command line*/
-			//			Scanner in = new Scanner(System.in);
-			//			String tokenizer = 
+			Scanner scan = new Scanner(System.in);
+			readInput(scan.nextLine());
 
-			readInputFile(args[0]);
-
-			LibraryServer server = new LibraryServer(numBooks);
+			Server server = new Server(numBooks);
 			TCPServer = new ServerSocket(portTCP);
 			TCPServer.setSoTimeout(50);
 			UDPSocket = new DatagramSocket(portUDP);
@@ -38,7 +36,7 @@ public class LibraryServer {
 							tcp.start();
 						}
 					} catch(SocketTimeoutException e){}
-					
+
 					byte[] buf = new byte[len];
 					DatagramPacket datapacket = new DatagramPacket(buf, buf.length);
 					try{
@@ -52,25 +50,17 @@ public class LibraryServer {
 			} finally {
 				TCPServer.close();
 			}
-
+			scan.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {}
 	}
 
-	private static void readInputFile(String file) throws IOException {
-		BufferedReader dIn = null;
-
-		try {
-			dIn = new BufferedReader(new FileReader(file));
-			StringTokenizer st = new StringTokenizer(dIn.readLine());
-			numBooks = Integer.parseInt(st.nextToken());
-			portUDP = Integer.parseInt(st.nextToken());
-			portTCP = Integer.parseInt(st.nextToken());
-			ipAddr = "127.0.0.1";
-		} catch (FileNotFoundException e) {} catch (IOException e) {System.err.println(e);} 
-		finally {
-			dIn.close();
-		}
+	static void readInput(String nextLine) throws IOException {
+		StringTokenizer st = new StringTokenizer(nextLine);
+		numBooks = Integer.parseInt(st.nextToken());
+		portUDP = Integer.parseInt(st.nextToken());
+		portTCP = Integer.parseInt(st.nextToken());
+		ipAddr = "127.0.0.1";
 	}
 }
