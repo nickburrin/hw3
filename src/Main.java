@@ -59,13 +59,13 @@ class TestThread implements Runnable{
 	public void run() {
 		while(true){
 			int p;
-			System.out.println("Added \"" + this.name + "\" at index " + priQueue.insert(this.name, p = randGen.nextInt(10)) + " with priority " + p);
-			
-			//try {Thread.sleep(1500);} catch (InterruptedException e) {e.printStackTrace();}
+			priQueue.insert(this.name, p = randGen.nextInt(10));
 
-			System.out.println("Found \"" + this.name + "\" at index " + priQueue.search(this.name));
+			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+
+			System.out.println("Found \"" + this.name + "\" with priority " + p + " at index " + priQueue.search(this.name));
 			
-			try {Thread.sleep(1500);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 
 			System.out.printf("Removing the first element \"%s\" with priority %d\n", priQueue.getFirst(), p);
 			//System.out.println("Found " + this.name + " at index " + priQueue.search(this.name));
